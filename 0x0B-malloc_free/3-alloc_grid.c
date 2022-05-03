@@ -1,41 +1,37 @@
 #include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 /**
- * **alloc_grid - function to allocate memory to grid
- * @width: int type
- * @height: int type
- * Return: grid of 0s
+ * alloc_grid - creates a 2 dimensional array of integers initialized to 0
+ * @width: int
+ * @height:int
+ *
+ * Return: a double pointer to the 2D array
  */
 int **alloc_grid(int width, int height)
 {
-	int x, y;
-	int **ptr;
+	int i, j;
+	int **a;
 
 	if (width <= 0 || height <= 0)
-	{
-		return  (NULL);
-	}
-	ptr = malloc(height * sizeof(int *));
-	if (ptr == NULL)
-	{
 		return (NULL);
-	}
-	for (x = 0; x < height; x++)
+	a = (int **)malloc(sizeof(int *) * height);
+	if (a == NULL)
+		return (NULL);
+	for (i = 0; i < height; i++)
 	{
-		ptr[x] = malloc(width * sizeof(int));
-		if (ptr[x] == NULL)
+		a[i] = (int *)malloc(sizeof(int) * width);
+		if (a[i] == NULL)
 		{
-			for (y = 0; y < x;  y++)
-				free(ptr[y]);
-			free(ptr);
+			for (j = 0; j < i; j++)
+				free(a[j]);
+			free(a);
 			return (NULL);
 		}
-		for (y = 0; y < width; y++)
+		for (j = 0; j < width; j++)
 		{
-			ptr[x][y] = 0;
+			a[i][j] = 0;
 		}
 	}
-	return (ptr);
+	return (a);
 }
